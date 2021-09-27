@@ -9,6 +9,8 @@ module com.example.instruments {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires javafx.media;
+    requires java.logging;
 
     opens com.example.instruments to javafx.fxml;
     exports com.example.instruments;
