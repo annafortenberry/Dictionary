@@ -1,9 +1,11 @@
-package assignment2;
+package assignment2.instruments;
 
 /*
     This class represents a record of an instrument. Each record consists
     of a DataKey and data.
  */
+
+import assignment2.instruments.DataKey;
 
 public class InstrumentRecord {
 

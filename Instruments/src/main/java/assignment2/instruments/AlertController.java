@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.instruments;
 
 import java.net.URL;
 import java.util.ResourceBundle;

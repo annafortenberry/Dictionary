@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.instruments;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -24,12 +24,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *   @author Spencer Smith
- *   @author Anna Fortenberry
  *
+ * @author Spencer Smith
+ * @author Anna Fortenberry
  */
-
-public class InstrumentController implements Initializable {
+public class InstrumentsController implements Initializable {
 
     @FXML
     private MenuBar mainMenu;
@@ -53,7 +52,7 @@ public class InstrumentController implements Initializable {
     MediaPlayer player;
     OrderedDictionary database = null;
     InstrumentRecord instrument = null;
-    String instrumentType = null;
+    String instrumentType = "";
 
     @FXML
     public void exit() {
@@ -92,7 +91,7 @@ public class InstrumentController implements Initializable {
         }
         if (database.isEmpty()) {
             this.InstrumentPortal.setVisible(false);
-            displayAlert("No more instruments in the database to show");
+            displayAlert("No more birds in the database to show");
         } else {
             if (previousInstrument != null) {
                 instrument = previousInstrument;
@@ -139,20 +138,36 @@ public class InstrumentController implements Initializable {
         }
     }
 
+    public void getSize() {
+        switch (this.type.getValue().toString()) {
+            case "Brass":
+                this.instrumentType = "Brass";
+                break;
+            case "Strings":
+                this.instrumentType = "Strings";
+                break;
+            case "Woodwind":
+                this.instrumentType = "Woodwind";
+                break;
+            default:
+                break;
+        }
+    }
+
     public void first() {
-            // Write this method
+        // Write this method
     }
 
     public void last() {
-            // Write this method
+        // Write this method
     }
 
     public void next() {
-            // Write this method;
+        // Write this method;
     }
 
     public void previous() {
-            // Write this method
+        // Write this method
     }
 
     public void play() {
@@ -180,8 +195,8 @@ public class InstrumentController implements Initializable {
             String description;
             String type = "";
             input = new Scanner(new File("InstrumentsDatabase.txt"));
-            while (input.hasNext())  { // read until  end of file
-
+            while (input.hasNext()) // read until  end of file
+            {
                 String data = input.nextLine();
                 switch (line % 3) {
                     case 0:
@@ -192,20 +207,23 @@ public class InstrumentController implements Initializable {
                         break;
                     default:
                         description = data;
-                        database.insert(new InstrumentRecord(new DataKey(instrumentName, type), description, instrumentName + ".mp3", instrumentName + ".jpg"));
+                        database.insert(new InstrumentRecord(
+                                new DataKey(instrumentName, type),
+                                description, instrumentName + ".mp3",
+                                instrumentName + ".jpg"));
                         break;
-                    }
-                    line++;
+                }
+                line++;
             }
-            } catch (IOException e) {
-                System.out.println("There was an error in reading or opening the file: InstrumentsDatabase.txt");
-                System.out.println(e.getMessage());
-            } catch (DictionaryException ex) {
-                Logger.getLogger(InstrumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.InstrumentPortal.setVisible(true);
-            this.first();
+        } catch (IOException e) {
+            System.out.println("There was an error in reading or opening the file: BirdsDatabase.txt");
+            System.out.println(e.getMessage());
+        } catch (DictionaryException ex) {
+            Logger.getLogger(InstrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.InstrumentPortal.setVisible(true);
+        this.first();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

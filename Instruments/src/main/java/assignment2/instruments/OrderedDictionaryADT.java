@@ -1,4 +1,8 @@
-package assignment2;
+package assignment2.instruments;
+
+import assignment2.instruments.DataKey;
+import assignment2.instruments.DictionaryException;
+import assignment2.instruments.InstrumentRecord;
 
 public interface OrderedDictionaryADT {
 
@@ -68,7 +72,7 @@ public interface OrderedDictionaryADT {
        @return InstrumentRecord
        @throws DictionaryException
      */
-    public Instrument largest() throws DictionaryException;
+    public InstrumentRecord largest() throws DictionaryException;
 
     /* Returns true if the dictionary is empty, and true otherwise.
 
