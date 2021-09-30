@@ -110,7 +110,7 @@ public class InstrumentsController implements Initializable {
             player.stop();
         }
         String img = instrument.getImage();
-        Image instrumentImage = new Image("file:src/main/resources/assignment/birds/images/" + img);
+        Image instrumentImage = new Image("file:src/main/resources/assignment/instruments/images/" + img);
         image.setImage(instrumentImage);
         title.setText(instrument.getDataKey().getInstrumentName());
         about.setText(instrument.getAbout());
@@ -138,40 +138,54 @@ public class InstrumentsController implements Initializable {
         }
     }
 
-    public void getSize() {
-        switch (this.type.getValue().toString()) {
-            case "Brass":
-                this.instrumentType = "Brass";
-                break;
-            case "Strings":
-                this.instrumentType = "Strings";
-                break;
-            case "Woodwind":
-                this.instrumentType = "Woodwind";
-                break;
-            default:
-                break;
-        }
-    }
-
     public void first() {
-        // Write this method
+        //get the smallest element in the database
+        try {
+            instrument = database.smallest();
+        } catch (DictionaryException ex) {
+            //if there is an error getting the smallest, throw error
+            System.out.println("Error in getting first element " + ex);
+        }
+        //display the instrument
+        showInstrument();
+
     }
 
     public void last() {
-        // Write this method
+        //try getting the largest record
+        try {
+            instrument = database.largest();
+        } catch (DictionaryException ex) {
+            System.out.println("Error in getting last instrument " + ex)
+        }
+        //display the instrument
+        showInstrument();
     }
 
     public void next() {
-        // Write this method;
+        try {
+            //get the next element
+            instrument = database.successor(instrument.getDataKey());
+        } catch (DictionaryException ex) {
+            System.out.println("Error in getting next instrument " + ex);
+        }
+        //display the instrument
+        showInstrument();
     }
 
     public void previous() {
-        // Write this method
+        try {
+            //get the previous element
+            instrument = database.predecessor(instrument.getDataKey());
+        } catch (DictionaryException ex) {
+            System.out.println("Error in getting previous instrument " + ex);
+        }
+        //display the instrument
+        showInstrument();
     }
 
     public void play() {
-        String filename = "src/main/resources/assignment/birds/sounds/" + instrument.getSound();
+        String filename = "src/main/resources/assignment/instruments/sounds/" + instrument.getSound();
         media = new Media(new File(filename).toURI().toString());
         player = new MediaPlayer(media);
         play.setDisable(true);
@@ -216,7 +230,7 @@ public class InstrumentsController implements Initializable {
                 line++;
             }
         } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: BirdsDatabase.txt");
+            System.out.println("There was an error in reading or opening the file: InstrumentsDatabase.txt");
             System.out.println(e.getMessage());
         } catch (DictionaryException ex) {
             Logger.getLogger(InstrumentsController.class.getName()).log(Level.SEVERE, null, ex);

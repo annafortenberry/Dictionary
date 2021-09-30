@@ -10,8 +10,8 @@ Ordered List of Instruments:
     
     Strings:
         Banjo
-        Bass
-        Guitar
+        Bass Guitar
+        Acoustic Guitar
         Harp
         Violin
 
@@ -19,7 +19,7 @@ Ordered List of Instruments:
         Basoon
         Clarinet
         Flute
-        Obo
+        Oboe
 
         
 
