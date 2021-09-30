@@ -1,8 +1,10 @@
-module com.example.instruments {
+module assignment.instruments {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
+    requires java.logging;
+    requires javafx.media;
 
+    /*
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires validatorfx;
@@ -10,12 +12,8 @@ module com.example.instruments {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires javafx.media;
-    requires java.logging;
-    requires miglayout;
-    requires java.desktop;
+    requires java.desktop; */
 
-    opens assignment2 to javafx.fxml;
-    exports assignment2;
-    exports assignment2.instruments;
     opens assignment2.instruments to javafx.fxml;
+    exports assignment2.instruments;
 }

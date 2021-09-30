@@ -85,7 +85,7 @@ public class InstrumentsController implements Initializable {
         }
         DataKey key = instrument.getDataKey();
         try {
-            database.remove(key);
+            database.remove(instrument);
         } catch (DictionaryException ex) {
             System.out.println("Error in delete "+ ex);
         }
@@ -138,6 +138,22 @@ public class InstrumentsController implements Initializable {
         }
     }
 
+    public void getType() {
+        switch (this.type.getValue().toString()) {
+            case "Brass":
+                this.instrumentType = "Brass";
+                break;
+            case "Strings":
+                this.instrumentType = "Strings";
+                break;
+            case "Woodwind":
+                this.instrumentType = "Woodwind";
+                break;
+            default:
+                break;
+        }
+    }
+
     public void first() {
         //get the smallest element in the database
         try {
@@ -156,7 +172,7 @@ public class InstrumentsController implements Initializable {
         try {
             instrument = database.largest();
         } catch (DictionaryException ex) {
-            System.out.println("Error in getting last instrument " + ex)
+            System.out.println("Error in getting last instrument " + ex);
         }
         //display the instrument
         showInstrument();
@@ -224,7 +240,7 @@ public class InstrumentsController implements Initializable {
                         database.insert(new InstrumentRecord(
                                 new DataKey(instrumentName, type),
                                 description, instrumentName + ".mp3",
-                                instrumentName + ".jpg"));
+                                instrumentName + ".png"));
                         break;
                 }
                 line++;
