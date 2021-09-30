@@ -29,7 +29,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         // If the root is empty, no reason to call search function.
 
         if (root.isEmpty()) {
-            throw new DictionaryException("There is no record matching the given key.")
+            throw new DictionaryException("There is no record matching the given key.");
         }
 
         // Otherwise, traverse the tree, updating the current node. Use compareTo() with the
@@ -80,7 +80,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         root = recurInsert(root, r);
     }
 
-    // utility function for public insert() function
+    // utility function for insert function
     public Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException {
 
         // case 1: first element inserted into BST
@@ -95,7 +95,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         // If DataKey k >  curr's (this) DataKey: compareTo() returns -1.
         // If DataKey k <  curr's (this) DataKey: compareTo() returns 1.
 
-        int comparison = n.getData().getDataKey().compareTo(r);
+        int comparison = n.getData().getDataKey().compareTo(r.getDataKey());
 
         if (1 == comparison)
             n.setLeftChild(recurInsert(n.getLeftChild(), r));
@@ -114,66 +114,39 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                     matching key, it removes it from the BST and updates it accordingly. The
                     function cannot be called unless there is at least one element in the BST.
      */
-    public void remove(DataKey k) throws DictionaryException {
+    public void remove(InstrumentRecord r) throws DictionaryException {
+        root = recurRemove(root, r);
+    }
 
-        // use find function to locate and return node to be removed
+    // utility function for remove function
+    public Node recurRemove(Node n, InstrumentRecord r) throws DictionaryException {
 
-        Node rm = find(k);
-        Node parent = rm.getParent();
-        boolean hasOneChild = ( (rm.hasLeftChild() && !rm.hasRightChild()) || (!rm.hasLeftChild() && rm.hasRightChild()) )
+        // If r.getDataKey() == n.getData().getDataKey(): compareTo() returns 0.
+        // If r.getDataKey() > n.getData().getDataKey(): compareTo() returns -1.
+        // If r.getDataKey() < n.getData().getDataKey():: compareTo() returns 1.
 
-        // case 1: only the root node exists
-        if (rm == root) {
+        int comparison = n.getData().getDataKey().compareTo(r.getDataKey());
 
-            rm.setData(null);
+        if (1 == comparison)
+            n.setLeftChild(recurRemove(n.getLeftChild(), r));
+        else if (-1 == comparison)
+            n.setRightChild(recurRemove(n.getRightChild(), r));
+        else { // compareTo() returned 0, node to remove has been located
 
+            // Case 1: leaf node or only has one child
+
+            if (!n.hasLeftChild())
+                return n.getRightChild();
+            else if (!n.hasRightChild())
+                return n.getLeftChild();
+
+            // Case 2: has two children
+            // 1. set the InstrumentRecord of the node to delete to the InstrumentRecord of its predecessor.
+            // 2.
+            n.setData(predecessor(n.getData().getDataKey()));
+            n.setRightChild(recurRemove(n.getRightChild(), n.getData()));
         }
-        // case 2: leaf node, will not enter if only root node exists
-        else if (rm.isLeaf()) {
-
-            if (parent.getLeftChild() == rm) {
-                parent.setLeftChild(null);
-            }
-            else {
-                parent.setRightChild(null);
-            }
-
-        }
-        // case 3: one child, not a leaf node
-        else if (hasOneChild) {
-            if (rm.hasLeftChild()) {
-                rm.setParent(rm.getLeftChild());
-                //rm.setLeftChild(null);
-            }
-            else {
-                rm.setParent(rm.getRightChild());
-            }
-
-        }
-        // case 4: must have two children, will not be root node
-        else {
-
-            // If root DataKey k == rm's (this) DataKey: compareTo() returns 0.
-            //     Should not occur because insert function prevents repeats of elements.
-            // If root DataKey k >  rm's (this) DataKey: compareTo() returns -1.
-            // If root DataKey k <  rm's (this) DataKey: compareTo() returns 1.
-
-            int comparison = rm.getData().getDataKey().compareTo(root.getData().getDataKey());
-
-            // data to left of root is smaller than root - left subtree case
-            if (comparison == -1) {
-
-
-
-
-            }
-            // data to right of root is greater than root - right subtree case
-            else {
-
-            }
-
-
-        }
+        return n;
     }
 
     // Func: Successor
@@ -183,14 +156,25 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                     This is the smallest element in the right subtree.
      */
     public InstrumentRecord successor(DataKey k) throws DictionaryException {
+        return (findSuccessor(root, k).getData());
+    }
 
-        Node s = root.getRightChild();
+    // utility function for successor
+    public Node findSuccessor(Node n, DataKey k) throws DictionaryException {
 
-        while (s.hasLeftChild()) {
-            s = s.getLeftChild();
+        int comparison = n.getData().getDataKey().compareTo(k);
+
+        if (1 == comparison)
+            n.setLeftChild(findSuccessor(n.getLeftChild(), k));
+        else if (-1 == comparison)
+            n.setRightChild(findSuccessor(n.getRightChild(), k));
+        else { // compareTo() returned 0, node to start from has been located
+            while (n.hasRightChild()) {
+                n = n.getLeftChild();
+            }
         }
 
-        return s.getData();
+        return n;
     }
 
     // Func: Predecessor
@@ -199,15 +183,26 @@ public class OrderedDictionary implements OrderedDictionaryADT {
        Desc:        This function traverses through the tree and returns the predecessor.
                     This is the largest element in the left subtree.
      */
-    public InsrumentRecord predecessor(Node n) throws DictionaryException {
+    public InstrumentRecord predecessor(DataKey k) throws DictionaryException {
+        return (findPredecessor(root, k).getData());
+    }
 
-        Node temp = n.getLeftChild();
+    // utility function for predecessor
+    public Node findPredecessor(Node n, DataKey k) throws DictionaryException {
 
-        while (temp.hasRightChild()) {
-            temp = temp.getRightChild();
+        int comparison = n.getData().getDataKey().compareTo(k);
+
+        if (1 == comparison)
+            n.setLeftChild(findSuccessor(n.getLeftChild(), k));
+        else if (-1 == comparison)
+            n.setRightChild(findSuccessor(n.getRightChild(), k));
+        else { // compareTo() returned 0, node to start from has been located
+            while (n.hasLeftChild()) {
+                n = n.getRightChild();
+            }
         }
 
-        return temp.getData().getDataKey();
+        return n;
     }
 
     public InstrumentRecord smallest() throws DictionaryException {
@@ -235,10 +230,6 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     public boolean isEmpty() {
-
-        if (root.getData().getDataKey() == null)
-            return true;
-        else
-            return false;
+        return root.getData() == null;
     }
 }
