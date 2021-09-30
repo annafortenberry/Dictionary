@@ -50,7 +50,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                 // The DataKey of curr is larger than the parameter DataKey.
                 // This means, if the node exists, it would be stored in the
                 // left subtree, in an ordered BST.
-                if (!hasLeftChild()) {
+                if (!curr.hasLeftChild()) {
                     throw new DictionaryException("There is no record matching the given key.");
                 }
                 curr = curr.getLeftChild(); // set equal to leftChild (root of left subtree)
@@ -58,7 +58,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                 // The DataKey of curr is smaller than the parameter DataKey.
                 // This means, if the node exists, it would be stored in the
                 // right subtree, in an ordered BST.
-                if (!hasRightChild()) {
+                if (!curr.hasRightChild()) {
                     throw new DictionaryException("There is no record matching the given key.");
                 }
                 curr = curr.getRightChild(); // set equal to rightChild (root of right subtree)
@@ -80,8 +80,8 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         root = recurInsert(root, r);
     }
 
-    // private utility function for public insert() function
-    private Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException {
+    // utility function for public insert() function
+    public Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException {
 
         // case 1: first element inserted into BST
 
@@ -182,7 +182,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
        Desc:        This function traverses through the tree and returns the successor.
                     This is the smallest element in the right subtree.
      */
-    public InstrumentRecord successor() throws DictionaryException {
+    public InstrumentRecord successor(DataKey k) throws DictionaryException {
 
         Node s = root.getRightChild();
 
@@ -190,7 +190,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
             s = s.getLeftChild();
         }
 
-        return s.getData().getDataKey();
+        return s.getData();
     }
 
     // Func: Predecessor
@@ -219,7 +219,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
             smallest = smallest.getLeftChild();
         }
 
-        return smallest.getData().getDataKey();
+        return smallest.getData();
     }
 
     public InstrumentRecord largest() throws DictionaryException {
@@ -231,7 +231,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
             largest = largest.getRightChild();
         }
 
-        return largest.getData().getDataKey();
+        return largest.getData();
     }
 
     public boolean isEmpty() {
