@@ -97,7 +97,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         // case 1: first element inserted into BST
 
         if (n.isEmpty()) {
-            n.setData(r);       // update root with InstrumentRecord
+            n = new Node(r);       // update root with InstrumentRecord
             return n;
         }
 
@@ -116,7 +116,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         else
             return n;           // value already exists, no repeat insertion
 
-        n.setData(r);
+        n = new Node(r);
         return n;
     }
 
