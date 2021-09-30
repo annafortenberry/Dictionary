@@ -8,6 +8,7 @@ package assignment2.instruments;
 
 public class OrderedDictionary implements OrderedDictionaryADT {
 
+    // initial memory allocation for a root node
     Node root;
 
     OrderedDictionary() {
@@ -15,16 +16,16 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     // Func: Find
-    /* Parameters:  DataKey k, (data, left child, right child)
-       Return:      DataKey k, (data, left child, right child)
+    /* Parameters:  DataKey k (string name, string type)
+       Return:      InstrumentRecord (DataKey key, string about, string sound, string image)
        Desc:        This function first calls the .isEmpty() function to check whether the tree is empty.
                     If the tree is not empty, it uses the compareTo() function to compare each node in the
                     tree with the given DataKey k.
      */
     public InstrumentRecord find(DataKey k) throws DictionaryException {
 
-        Node curr = root;       // set curr equal to root to start
-        int comparison;         // placeholder for return value of comparison
+        Node curr = root;       // allocate a new node and set it equal to value of root to start
+        int comparison;         // placeholder for return value of compareTo()
 
         // If the root is empty, no reason to call search function.
 
@@ -32,8 +33,8 @@ public class OrderedDictionary implements OrderedDictionaryADT {
             throw new DictionaryException("There is no record matching the given key.");
         }
 
-        // Otherwise, traverse the tree, updating the current node. Use compareTo() with the
-        // current node and the passed DataKey k.
+        // Otherwise, traverse the tree, updating the InstrumentRecord stored in the current node.
+        // Use compareTo() with the current node and the passed DataKey k.
 
         while (true) {
 
@@ -43,13 +44,16 @@ public class OrderedDictionary implements OrderedDictionaryADT {
 
             comparison = curr.getData().getDataKey().compareTo(k);
 
+            // DataKey matches the DataKey of the curr node - match found
             if (0 == comparison) {
                 return curr.getData();
             }
+
             if (1 == comparison) {
                 // The DataKey of curr is larger than the parameter DataKey.
                 // This means, if the node exists, it would be stored in the
                 // left subtree, in an ordered BST.
+                // If the left child does not exist, nothing left to search - no match found
                 if (!curr.hasLeftChild()) {
                     throw new DictionaryException("There is no record matching the given key.");
                 }
@@ -58,6 +62,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                 // The DataKey of curr is smaller than the parameter DataKey.
                 // This means, if the node exists, it would be stored in the
                 // right subtree, in an ordered BST.
+                // If the right child does not exist, nothing left to search - no match found
                 if (!curr.hasRightChild()) {
                     throw new DictionaryException("There is no record matching the given key.");
                 }
@@ -70,8 +75,8 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         }
     }
 
-    // Func: Insert / Recursive Insert
-    /* Parameters:  DataKey k, (data, left child, right child)
+    // Func: Insert
+    /* Parameters:  InstrumentRecord (DataKey key, string about, string sound, string image)
        Return:      void
        Desc:        This function calls the recursive function recurInsert to find the correct
                     place in the BST to insert a new node and updates the tree accordingly.
@@ -80,12 +85,19 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         root = recurInsert(root, r);
     }
 
-    // utility function for insert function
+    // Func: Recursive Insert
+    /* Parameters:  Node n (InstrumentRecord r, Node parent, Node left, Node right)
+                    InstrumentRecord r (DataKey key, string about, string sound, string image)
+       Return:      Node n (InstrumentRecord r, Node parent, Node left, Node right)
+       Desc:        This function uses the compareTo() function to update the node where the
+                    new value should be stored in the BST.
+     */
     public Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException {
 
         // case 1: first element inserted into BST
 
         if (n.isEmpty()) {
+            n.setData(r);       // update root with InstrumentRecord
             return n;           // don't need to return new Node bc root = new Node at init?
         }
 
