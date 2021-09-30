@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.instruments;
 
 /* Spencer Smith, Anna Fortenberry
  * sms0697, akf0099

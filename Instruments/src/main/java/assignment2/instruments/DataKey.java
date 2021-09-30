@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.instruments;
 
 import java.util.Objects;
 

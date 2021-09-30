@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.instruments;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Instrument extends Application {
+/**
+ *
+ * @author Spencer Smith
+ * @author Anna Fortenberry
+ */
+public class Instruments extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -15,16 +20,20 @@ public class Instrument extends Application {
 
         Scene scene = new Scene(root);
 
-        stage.getIcons().add(new Image(/* add image here, UNT logo? */));
+        stage.getIcons().add(new Image("file:src/main/resources/assignment2/instruments/images/UNTIcon.png"));
         stage.setTitle("Instruments Portal");
 
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     /**
-    * @param args the command line arguments
+     * @param args the command line arguments
      */
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
 }

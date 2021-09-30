@@ -11,7 +11,11 @@ module com.example.instruments {
     requires eu.hansolo.tilesfx;
     requires javafx.media;
     requires java.logging;
+    requires miglayout;
+    requires java.desktop;
 
-    opens com.example.instruments to javafx.fxml;
-    exports com.example.instruments;
+    opens assignment2 to javafx.fxml;
+    exports assignment2;
+    exports assignment2.instruments;
+    opens assignment2.instruments to javafx.fxml;
 }
