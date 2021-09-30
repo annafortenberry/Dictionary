@@ -1,25 +1,26 @@
 # Dictionary
 
-List of Instruments:
+Ordered List of Instruments:
 
+    Brass:
+        French Horn
+        Trombone
+        Trumpet
+        Tuba
+    
     Strings:
-        Guitar
         Banjo
         Bass
+        Guitar
         Harp
         Violin
 
     Woodwind:
-        Flute
-        Clarinet
         Basoon
+        Clarinet
+        Flute
         Obo
 
-    Brass:
-        Trumpet
-        French Horn
-        Trombone
-        Tuba
         
 
     

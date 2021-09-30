@@ -47,7 +47,6 @@ public class Node {
             leftChild.setParent(this);
     }
 
-
     public void setRightChild(Node rightChild) {
         this.rightChild = rightChild;
         if (rightChild != null )//&& rightChild.hasRightChild())
