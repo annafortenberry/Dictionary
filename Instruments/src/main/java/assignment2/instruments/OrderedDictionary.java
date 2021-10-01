@@ -9,7 +9,7 @@ package assignment2.instruments;
 public class OrderedDictionary implements OrderedDictionaryADT {
 
     // initial memory allocation for a root node
-    private Node root;
+     Node root;
 
     OrderedDictionary() {
         root = new Node();
@@ -96,7 +96,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
 
         // case 1: first element inserted into BST
 
-        if (root == null) {
+        if (root.isEmpty()) {
             root = new Node(key); // update root with InstrumentRecord
             return root;
         }

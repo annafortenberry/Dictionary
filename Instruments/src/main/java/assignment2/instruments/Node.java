@@ -23,23 +23,21 @@ public class Node {
     }
 
     //getter for the nodes data
-    public InstrumentRecord getData() {return data;}
+    public InstrumentRecord getData() {return this.data;}
 
     public void setData(InstrumentRecord data) {
         this.data = data;
     }
 
     public Node getLeftChild() {
-        return leftChild;
+        return this.leftChild;
     }
 
     public Node getParent() {
-        return parent;
+        return this.parent;
     }
 
-    public Node getRightChild() {
-        return rightChild;
-    }
+    public Node getRightChild() { return this.rightChild; }
 
     public void setLeftChild(Node leftChild) {
         this.leftChild = leftChild;

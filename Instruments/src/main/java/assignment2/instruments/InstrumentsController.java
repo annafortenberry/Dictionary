@@ -201,7 +201,7 @@ public class InstrumentsController implements Initializable {
     }
 
     public void play() {
-        String filename = "src/main/resources/assignment/instruments/sounds/" + instrument.getSound();
+        String filename = "Instruments/src/main/resources/assignment/instruments/sounds/" + instrument.getSound();
         media = new Media(new File(filename).toURI().toString());
         player = new MediaPlayer(media);
         play.setDisable(true);
@@ -233,10 +233,7 @@ public class InstrumentsController implements Initializable {
                     case 1 -> instrumentName = data;
                     default -> {
                         description = data;
-                        database.insert(new InstrumentRecord(
-                                new DataKey(instrumentName, type),
-                                description, instrumentName + ".mp3",
-                                instrumentName + ".png"));
+                        database.insert(new InstrumentRecord( new DataKey(instrumentName, type), description, instrumentName + ".mp3", instrumentName + ".png"));
                     }
                 }
                 line++;

@@ -12,13 +12,13 @@ public class DataKey {
 
     //constructor with two parameters
     public DataKey(String name, String type) {
-        instrumentName = name;
-        instrumentType = type;
+        this.instrumentName = name;
+        this.instrumentType = type;
     }
 
     //public getters
-    public String getInstrumentName() { return instrumentName; }
-    public String getInstrumentType() { return instrumentType; }
+    public String getInstrumentName() { return this.instrumentName; }
+    public String getInstrumentType() { return this.instrumentType; }
 
     /**
      * Returns 0 if this DataKey is equal to k, returns -1 if this DataKey is smaller

@@ -18,12 +18,12 @@ public class InstrumentRecord {
         this.key = k;
         this.about = a;
         this.sound = s;
-        image = i;
+        this.image = i;
     }
 
     //public getters
-    public DataKey getDataKey() { return key; }
-    public String getAbout() { return about; }
-    public String getSound() { return sound; }
-    public String getImage() { return image; }
+    public DataKey getDataKey() { return this.key; }
+    public String getAbout() { return this.about; }
+    public String getSound() { return this.sound; }
+    public String getImage() { return this.image; }
 }
