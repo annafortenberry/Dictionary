@@ -233,7 +233,9 @@ public class InstrumentsController implements Initializable {
                     case 1 -> instrumentName = data;
                     default -> {
                         description = data;
-                        database.insert(new InstrumentRecord( new DataKey(instrumentName, type), description, instrumentName + ".mp3", instrumentName + ".png"));
+                        DataKey tempDataKey = new DataKey(instrumentName, type);
+                        InstrumentRecord tempIR = new InstrumentRecord(tempDataKey, description, instrumentName + ".mp3", instrumentName + ".png");
+                        database.insert(tempIR);
                     }
                 }
                 line++;

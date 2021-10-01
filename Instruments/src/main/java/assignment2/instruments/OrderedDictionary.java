@@ -82,7 +82,11 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                     place in the BST to insert a new node and updates the tree accordingly.
      */
     public void insert(InstrumentRecord key) throws DictionaryException {
-        root = recurInsert(root, key);
+        if(root.isEmpty()) {
+            root.setData(key);
+        }
+        else
+            root = recurInsert(root, key);
     }
 
     // Func: Recursive Insert
@@ -92,13 +96,13 @@ public class OrderedDictionary implements OrderedDictionaryADT {
        Desc:        This function uses the compareTo() function to update the node where the
                     new value should be stored in the BST.
      */
-    public Node recurInsert(Node root, InstrumentRecord key) throws DictionaryException {
+    public Node recurInsert(Node r, InstrumentRecord key) throws DictionaryException {
 
         // case 1: first element inserted into BST
 
-        if (root.isEmpty()) {
-            root = new Node(key); // update root with InstrumentRecord
-            return root;
+        if (r == null) {
+            r = new Node(key); // update root with InstrumentRecord
+            return r;
         }
 
         // case 2: BST has already been initialized
@@ -107,15 +111,15 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         // If DataKey k >  curr's (this) DataKey: compareTo() returns -1.
         // If DataKey k <  curr's (this) DataKey: compareTo() returns 1.
 
-        int comparison = root.getData().getDataKey().compareTo(key.getDataKey());
+        int comparison = r.getData().getDataKey().compareTo(key.getDataKey());
 
         if (1 == comparison)
-            root.setLeftChild(recurInsert(root.getLeftChild(), key));
+            r.setLeftChild(recurInsert(r.getLeftChild(), key));
         else if (-1 == comparison)
-            root.setRightChild(recurInsert(root.getRightChild(), key));
+            r.setRightChild(recurInsert(r.getRightChild(), key));
         // value already exists, no repeat insertion
 
-        return root;
+        return r;
     }
 
     // Func: Remove

@@ -26,7 +26,7 @@ public class DataKey {
     **/
     public int compareTo(DataKey k) {
         //if the InstrumentTypes are equal then compare the DataKey's alphabetically by name
-        if (Objects.equals(this.getInstrumentType(), k.getInstrumentType())) {
+        if (stringCompare(this.getInstrumentType(), k.getInstrumentType()) == 2) {
             int compare = stringCompare(this.getInstrumentName(), k.getInstrumentName());
             //if the InstrumentNames are exactly the same, return 0
             if (compare == 2){

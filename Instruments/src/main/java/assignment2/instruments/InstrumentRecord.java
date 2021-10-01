@@ -22,8 +22,8 @@ public class InstrumentRecord {
     }
 
     //public getters
-    public DataKey getDataKey() { return this.key; }
-    public String getAbout() { return this.about; }
-    public String getSound() { return this.sound; }
-    public String getImage() { return this.image; }
+    public DataKey getDataKey() { return key; }
+    public String getAbout() { return about; }
+    public String getSound() { return sound; }
+    public String getImage() { return image; }
 }
