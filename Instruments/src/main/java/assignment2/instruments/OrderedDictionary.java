@@ -9,7 +9,7 @@ package assignment2.instruments;
 public class OrderedDictionary implements OrderedDictionaryADT {
 
     // initial memory allocation for a root node
-    Node root;
+    private Node root;
 
     OrderedDictionary() {
         root = new Node();
@@ -81,8 +81,8 @@ public class OrderedDictionary implements OrderedDictionaryADT {
        Desc:        This function calls the recursive function recurInsert to find the correct
                     place in the BST to insert a new node and updates the tree accordingly.
      */
-    public void insert(InstrumentRecord r) throws DictionaryException {
-        root = recurInsert(root, r);
+    public void insert(InstrumentRecord key) throws DictionaryException {
+        root = recurInsert(root, key);
     }
 
     // Func: Recursive Insert
@@ -92,13 +92,13 @@ public class OrderedDictionary implements OrderedDictionaryADT {
        Desc:        This function uses the compareTo() function to update the node where the
                     new value should be stored in the BST.
      */
-    public Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException {
+    public Node recurInsert(Node root, InstrumentRecord key) throws DictionaryException {
 
         // case 1: first element inserted into BST
 
-        if (n.isEmpty()) {
-            n = new Node(r);       // update root with InstrumentRecord
-            return n;
+        if (root == null) {
+            root = new Node(key); // update root with InstrumentRecord
+            return root;
         }
 
         // case 2: BST has already been initialized
@@ -107,17 +107,15 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         // If DataKey k >  curr's (this) DataKey: compareTo() returns -1.
         // If DataKey k <  curr's (this) DataKey: compareTo() returns 1.
 
-        int comparison = n.getData().getDataKey().compareTo(r.getDataKey());
+        int comparison = root.getData().getDataKey().compareTo(key.getDataKey());
 
         if (1 == comparison)
-            n.setLeftChild(recurInsert(n.getLeftChild(), r));
+            root.setLeftChild(recurInsert(root.getLeftChild(), key));
         else if (-1 == comparison)
-            n.setRightChild(recurInsert(n.getRightChild(), r));
-        else
-            return n;           // value already exists, no repeat insertion
+            root.setRightChild(recurInsert(root.getRightChild(), key));
+        // value already exists, no repeat insertion
 
-        n = new Node(r);
-        return n;
+        return root;
     }
 
     // Func: Remove
@@ -127,39 +125,39 @@ public class OrderedDictionary implements OrderedDictionaryADT {
                     matching key, it removes it from the BST and updates it accordingly. The
                     function cannot be called unless there is at least one element in the BST.
      */
-    public void remove(InstrumentRecord r) throws DictionaryException {
-        root = recurRemove(root, r);
+    public void remove(InstrumentRecord key) throws DictionaryException {
+        root = recurRemove(root, key);
     }
 
     // utility function for remove function
-    public Node recurRemove(Node n, InstrumentRecord r) throws DictionaryException {
+    public Node recurRemove(Node root, InstrumentRecord key) throws DictionaryException {
 
         // If r.getDataKey() == n.getData().getDataKey(): compareTo() returns 0.
         // If r.getDataKey() > n.getData().getDataKey(): compareTo() returns -1.
         // If r.getDataKey() < n.getData().getDataKey():: compareTo() returns 1.
 
-        int comparison = n.getData().getDataKey().compareTo(r.getDataKey());
+        int comparison = root.getData().getDataKey().compareTo(key.getDataKey());
 
         if (1 == comparison)
-            n.setLeftChild(recurRemove(n.getLeftChild(), r));
+            root.setLeftChild(recurRemove(root.getLeftChild(), key));
         else if (-1 == comparison)
-            n.setRightChild(recurRemove(n.getRightChild(), r));
+            root.setRightChild(recurRemove(root.getRightChild(), key));
         else { // compareTo() returned 0, node to remove has been located
 
             // Case 1: leaf node or only has one child
 
-            if (!n.hasLeftChild())
-                return n.getRightChild();
-            else if (!n.hasRightChild())
-                return n.getLeftChild();
+            if (!root.hasLeftChild())
+                return root.getRightChild();
+            else if (!root.hasRightChild())
+                return root.getLeftChild();
 
             // Case 2: has two children
             // 1. set the InstrumentRecord of the node to delete to the InstrumentRecord of its predecessor.
             // 2.
-            n.setData(predecessor(n.getData().getDataKey()));
-            n.setRightChild(recurRemove(n.getRightChild(), n.getData()));
+            root.setData(predecessor(root.getData().getDataKey()));
+            root.setRightChild(recurRemove(root.getRightChild(), root.getData()));
         }
-        return n;
+        return root;
     }
 
     // Func: Successor
@@ -173,21 +171,21 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     // utility function for successor
-    public Node findSuccessor(Node n, DataKey k) throws DictionaryException {
+    public Node findSuccessor(Node root, DataKey k) throws DictionaryException {
 
-        int comparison = n.getData().getDataKey().compareTo(k);
+        int comparison = root.getData().getDataKey().compareTo(k);
 
         if (1 == comparison)
-            n.setLeftChild(findSuccessor(n.getLeftChild(), k));
+            root.setLeftChild(findSuccessor(root.getLeftChild(), k));
         else if (-1 == comparison)
-            n.setRightChild(findSuccessor(n.getRightChild(), k));
+            root.setRightChild(findSuccessor(root.getRightChild(), k));
         else { // compareTo() returned 0, node to start from has been located
-            while (n.hasRightChild()) {
-                n = n.getLeftChild();
+            while (root.hasRightChild()) {
+                root = root.getLeftChild();
             }
         }
 
-        return n;
+        return root;
     }
 
     // Func: Predecessor
@@ -201,21 +199,21 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     // utility function for predecessor
-    public Node findPredecessor(Node n, DataKey k) throws DictionaryException {
+    public Node findPredecessor(Node root, DataKey k) throws DictionaryException {
 
-        int comparison = n.getData().getDataKey().compareTo(k);
+        int comparison = root.getData().getDataKey().compareTo(k);
 
         if (1 == comparison)
-            n.setLeftChild(findSuccessor(n.getLeftChild(), k));
+            root.setLeftChild(findSuccessor(root.getLeftChild(), k));
         else if (-1 == comparison)
-            n.setRightChild(findSuccessor(n.getRightChild(), k));
+            root.setRightChild(findSuccessor(root.getRightChild(), k));
         else { // compareTo() returned 0, node to start from has been located
-            while (n.hasLeftChild()) {
-                n = n.getRightChild();
+            while (root.hasLeftChild()) {
+                root = root.getRightChild();
             }
         }
 
-        return n;
+        return root;
     }
 
     public InstrumentRecord smallest() throws DictionaryException {
@@ -242,7 +240,5 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         return largest.getData();
     }
 
-    public boolean isEmpty() {
-        return root.getData() == null;
-    }
+    public boolean isEmpty() { return root.getData() == null; }
 }

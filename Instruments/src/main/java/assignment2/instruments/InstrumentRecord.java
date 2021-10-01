@@ -5,8 +5,6 @@ package assignment2.instruments;
     of a DataKey and data.
  */
 
-import assignment2.instruments.DataKey;
-
 public class InstrumentRecord {
 
     private DataKey key;
@@ -17,9 +15,9 @@ public class InstrumentRecord {
     public InstrumentRecord() { this(null, null, null, null);}
 
     public InstrumentRecord(DataKey k, String a, String s, String i) {
-        key = k;
-        about = a;
-        sound = s;
+        this.key = k;
+        this.about = a;
+        this.sound = s;
         image = i;
     }
 

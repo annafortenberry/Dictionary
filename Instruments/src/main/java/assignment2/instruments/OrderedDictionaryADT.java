@@ -10,17 +10,17 @@ public interface OrderedDictionaryADT {
 
     public InstrumentRecord find(DataKey k) throws DictionaryException;
 
-    public void insert(InstrumentRecord r) throws DictionaryException;
-    public Node recurInsert(Node n, InstrumentRecord r) throws DictionaryException;
+    public void insert(InstrumentRecord key) throws DictionaryException;
+    public Node recurInsert(Node root, InstrumentRecord key) throws DictionaryException;
 
-    public void remove(InstrumentRecord r) throws DictionaryException;
-    public Node recurRemove(Node n, InstrumentRecord r) throws DictionaryException;
+    public void remove(InstrumentRecord key) throws DictionaryException;
+    public Node recurRemove(Node root, InstrumentRecord key) throws DictionaryException;
 
     public InstrumentRecord successor(DataKey k) throws DictionaryException;
-    public Node findSuccessor(Node n, DataKey k) throws DictionaryException;
+    public Node findSuccessor(Node root, DataKey k) throws DictionaryException;
 
     public InstrumentRecord predecessor(DataKey k) throws DictionaryException;
-    public Node findPredecessor(Node n, DataKey k) throws DictionaryException;
+    public Node findPredecessor(Node root, DataKey k) throws DictionaryException;
 
     public InstrumentRecord smallest() throws DictionaryException;
 

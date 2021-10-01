@@ -110,7 +110,7 @@ public class InstrumentsController implements Initializable {
             player.stop();
         }
         String img = instrument.getImage();
-        Image instrumentImage = new Image("file:src/main/resources/assignment/instruments/images/" + img);
+        Image instrumentImage = new Image("file:Instruments/src/main/resources/assignment/instruments/images/" + img);
         image.setImage(instrumentImage);
         title.setText(instrument.getDataKey().getInstrumentName());
         about.setText(instrument.getAbout());
@@ -127,7 +127,7 @@ public class InstrumentsController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
 
-            stage.getIcons().add(new Image("file:src/main/resources/assignment/birds/images/UNTIcon.png"));
+            stage.getIcons().add(new Image("file:Instruments/src/main/resources/assignment/birds/images/UNTIcon.png"));
             stage.setTitle("Dictionary Exception");
             controller.setAlertText(msg);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -224,29 +224,25 @@ public class InstrumentsController implements Initializable {
             String instrumentName = "";
             String description;
             String type = "";
-            input = new Scanner(new File("InstrumentsDatabase.txt"));
+            input = new Scanner(new File("InstrumentDatabase.txt"));
             while (input.hasNext()) // read until  end of file
             {
                 String data = input.nextLine();
                 switch (line % 3) {
-                    case 0:
-                        type = data;
-                        break;
-                    case 1:
-                        instrumentName = data;
-                        break;
-                    default:
+                    case 0 -> type = data;
+                    case 1 -> instrumentName = data;
+                    default -> {
                         description = data;
                         database.insert(new InstrumentRecord(
                                 new DataKey(instrumentName, type),
                                 description, instrumentName + ".mp3",
                                 instrumentName + ".png"));
-                        break;
+                    }
                 }
                 line++;
             }
         } catch (IOException e) {
-            System.out.println("There was an error in reading or opening the file: InstrumentsDatabase.txt");
+            System.out.println("There was an error in reading or opening the file: InstrumentDatabase.txt");
             System.out.println(e.getMessage());
         } catch (DictionaryException ex) {
             Logger.getLogger(InstrumentsController.class.getName()).log(Level.SEVERE, null, ex);

@@ -20,7 +20,7 @@ public class Instruments extends Application {
 
         Scene scene = new Scene(root);
 
-        stage.getIcons().add(new Image("file:src/main/resources/assignment2/instruments/images/UNTIcon.png"));
+        stage.getIcons().add(new Image("file:Instruments/src/main/resources/assignment2/instruments/images/UNTIcon.png"));
         stage.setTitle("Instruments Portal");
 
         stage.setScene(scene);
